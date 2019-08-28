@@ -7,10 +7,35 @@ body {
 	height: 100vh;
 }
 
-.app__main{
+.app__main-select{
   display: flex;
+  justify-content: center;
 }
 
 .app__container{
   display: block;
+  margin: 20px 10px;
+}
+
+.card__list{
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.card__list-item{
+  box-sizing: border-box;
+  margin: 5px;
+  padding: 0;
+  width: 160px;
+  height: 200px;
+}
+
+.app__img{
+  border-radius: 10px;
 }
