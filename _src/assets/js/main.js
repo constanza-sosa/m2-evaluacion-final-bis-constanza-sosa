@@ -7,8 +7,22 @@ const radios = document.querySelectorAll('.app__select');
 const container = document.querySelector('.app__container');
 let radioValue = '';
 const defaultImg = 'https://via.placeholder.com/160x195/30d9c4/ffffff/?text=ADALAB';
+let apiImg = '';
+const getVal = localStorage.getItem('value');
 
+getValue();
 
+function getValue (){
+  for (let i = 0; i < radios.length; i++){
+    const radio = radios[i];
+    radioValue = radios[i].value;
+    if (radioValue === getVal) {
+      radio.setAttribute('checked', true);
+    } else {
+      radios[0].setAttribute('checked', true);
+    }
+  }
+}
 
 function createNewImage(myElement, myClass, myClass2, mySrc, myAlt) {
   const newElement = document.createElement(myElement);
@@ -33,21 +47,49 @@ function startGame (){
 
   for (let i = 0; i < radios.length; i++){
     if (radios[i].checked) {
-      // do whatever you want with the checked radio
       radioValue = radios[i].value;
-      console.log(radioValue);
-      // only one radio can be logically checked, don't check the rest
+      localStorage.setItem('value', radioValue);
       break;
     }
   }
-  for (let i = 0; i < radioValue; i++){
-    const listItem = createNewElement('li', 'card__list-item', '');
-    const listItemImg1 = createNewImage('img', 'app__img', 'img__back', defaultImg, 'adalab-image');
-    listItem.appendChild(listItemImg1);
-    list.appendChild(listItem);
-  }
-  container.appendChild(list);
 
+  const endpoint = `https://raw.githubusercontent.com/Adalab/cards-data/master/${radioValue}.json`;
+
+  fetch(endpoint)
+    .then(response => response.json())
+    .then(data => {
+      for (let i = 0; i < radioValue; i++){
+        apiImg = data[i].image;
+        const apiAlt = data[i].name;
+        const apiPair = data[i].pair;
+
+        const listItem = createNewElement('li', 'card__list-item', '');
+        const listItemImg1 = createNewImage('img', 'app__img', 'img__back', defaultImg, 'adalab-image');
+        const listItemImg2 = createNewImage('img', 'app__img', 'img__front', apiImg, apiAlt);
+        listItemImg2.classList.add('hidden');
+        listItemImg2.setAttribute('data-index', apiPair);
+
+        listItem.appendChild(listItemImg1);
+        listItem.appendChild(listItemImg2);
+        list.appendChild(listItem);
+      }
+      container.appendChild(list);
+
+      const cards = document.querySelectorAll('.card__list-item');
+
+      for (const item of cards) {
+        item.addEventListener('click', changeImg);
+      }
+    });
 }
+
+function changeImg (event){
+  const selectedCard = event.currentTarget;
+  const imgBack = selectedCard.querySelector('.img__back');
+  const imgFront = selectedCard.querySelector('.img__front');
+  imgBack.classList.toggle('hidden');
+  imgFront.classList.toggle('hidden');
+}
+
 
 button.addEventListener('click', startGame);
