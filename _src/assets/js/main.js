@@ -91,23 +91,19 @@ function changeImg (event){
   const imgBack = selectedCard.querySelector('.img__back');
   const imgFront = selectedCard.querySelector('.img__front');
   const imgFrontIndex = imgFront.dataset.index;
-  imgBack.classList.toggle('hidden');
-  imgFront.classList.toggle('hidden');
-  console.log(imgFrontIndex);
-
   const playObject = {
     'id': cardIndex,
     'pair': imgFrontIndex,
   };
-
+  imgBack.classList.toggle('hidden');
+  imgFront.classList.toggle('hidden');
   playArray.push(playObject);
 
   if (playArray.length === 2){
     if(playArray[0].pair === playArray[1].pair){
-      console.log('somos iguales');
       playArray = [];
     }
-    else{
+    else {
       const cards = document.querySelectorAll('.card__list-item');
       for (const item of cards){
         const index = item.dataset.index;
@@ -126,20 +122,5 @@ function changeImg (event){
     }
   }
 }
-
-
-
-
-
-
-
-function noMatch(){
-  const cards = document.querySelectorAll('.card__list-item');
-  for (const item of cards){
-    const index = item.dataset.index;
-    console.log(index);
-  }
-}
-
 
 button.addEventListener('click', startGame);

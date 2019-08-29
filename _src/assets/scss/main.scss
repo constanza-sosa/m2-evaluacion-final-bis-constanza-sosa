@@ -1,15 +1,47 @@
 @import 'core/settings';
 @import 'core/links';
 
-body {
+.app {
 	background: $color-white;
 	margin: 0;
-	height: 100vh;
+  height: 100vh;
+  font-family: 'Lexend Giga', sans-serif;
+}
+
+.app__page{
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app__header{
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.app__main{
+  flex-grow: 1;
 }
 
 .app__main-select{
   display: flex;
   justify-content: center;
+  align-items: center;
+}
+
+.app__select-cont{
+  margin: 10px;
+}
+
+.button__start{
+  border-radius: 15px;
+  border: 2px solid #30D9C4;
+  height: 30px;
+  font-family: 'Lexend Giga', sans-serif;
+  margin: 10px;
 }
 
 .app__container{
@@ -47,4 +79,12 @@ body {
 
 .hidden{
   display: none;
+}
+
+.app__footer{
+  text-align: center;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
